@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker-bulma.min.css">
+        <script src="https://kit.fontawesome.com/6f28d47655.js" crossorigin="anonymous"></script>
+        <!-- <link href="css/style.css" rel="stylesheet"> -->
+    </head>
+    <body>
+        <div class="container is-fullhd">
+            <header class="mt-3 mb-6">
+                <h1 class="title has-text-centered">SET Market Return</h1>
+            </header>
+            <div class="columns is-desktop is-centered is-vcentered">
+                <div class="column is-one-third">
+                    <div class="columns is-desktop is-centered is-vcentered">
+                        <div class="column is-one-third">
+                            <span class="is-size-4 has-text-weight-bold">Type:</span>
+                        </div>
+                        <div class="column is-two-thirds">
+                            <div class="select is-medium" style="width: 100%;">
+                                <select name="type" class="has-text-weight-bold" style="width: 100%;" onchange="onChangeSelection()">
+                                    <option>Yearly</option>
+                                    <option>Monthly</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-one-third is-centered is-vcentered">
+                    <div class="columns is-desktop is-centered is-vcentered">
+                        <div class="column is-one-third">
+                            <label class="is-size-4 has-text-weight-bold">Data asof:</label>
+                        </div>
+                        <div class="column is-two-thirds">
+                            <input class="input is-medium has-text-centered has-text-weight-bold" type="text" name="datePicker" changeDate="onChangeSelection()" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-desktop is-multiline is-centered is-vcentered">
+                <div class="column">
+                    <table class="table is-fullwidth is-hoverable has-text-centered">
+                        <thead name="tableHead">
+                            <tr>
+                                <th>Period</th>
+                                <th>SET Yearly Return</th>
+                                <th>SET Dividend Yield</th>
+                                <th>SET Yearly TRI</th>
+                                <th>Bond Yield</th>
+                            </tr>
+                        </thead>
+                        <tbody name="tableBody"></tbody>
+                        <tfoot class="has-text-weight-bold" name="tableFoot"></tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker.min.js"></script>
+    <script src="script/index.js"></script>
+    </body>
+</html>
