@@ -1,1 +1,1 @@
-web: deno run --location http://example.com --allow-net --allow-read --allow-env --cached-only index.ts --port=${PORT}
+web: deno run --location http://example.com --allow-net --allow-read --allow-env --cached-only index.ts

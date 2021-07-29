@@ -4,3 +4,4 @@ Thumbs.db
 dist/
 .vscode
 .vercel
+.env
