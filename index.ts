@@ -3,6 +3,7 @@ import { Application, send, Context } from "https://deno.land/x/oak@v8.0.0/mod.t
 import { getTimestamp } from "./functions/gettimestamp.ts"
 import datafeedRouter from "./routes/datafeed.ts"
 import { cronUpdate } from "./functions/cronupdate.ts"
+import { updateBondYield, updateMarketIndex } from "./functions/updatedata.ts"
 
 const env = Deno.env.toObject()
 
@@ -10,6 +11,8 @@ const port = parseInt(env.PORT) || 8000
 const app = new Application()
 
 cronUpdate()
+await updateBondYield()
+await updateMarketIndex()
 
 // Logger
 app.use(async (ctx: Context, next) => {
