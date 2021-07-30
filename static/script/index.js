@@ -66,7 +66,9 @@ getBondDate(bondDate => {
         maxDate: new Date(endDate),
         datesDisabled: dateRange,
     });
-    dateElement.addEventListener("changeDate", onChangeSelection);
+    dateElement.addEventListener("changeDate", () => {
+        onChangeSelection(false);
+    });
 });
 
 const getDefaultReturn = (indicator, year, month, callback) => {
@@ -135,64 +137,28 @@ const changeTheadElement = (type) => {
 };
 
 const typeElement = document.querySelector("select[name=type]");
-getLastAvailable(typeElement.value.toLowerCase(), lastavailable => {
-    getDefaultReturn(`${typeElement.value.toLowerCase()}_tri`, lastavailable.endYear, lastavailable.endMonth, setTri => {
-        getDefaultReturn(`${typeElement.value.toLowerCase()}_return`, lastavailable.endYear, lastavailable.endMonth, setReturn => {
-            getBondAsof(bondAsof => {
-                getBondYield(bondAsof.endDate, bondYield => {
-                    changeTheadElement(typeElement.value);
-                    const tbodyElement = document.querySelector("tbody[name=tableBody]");
-                    for (let key in setReturn) {
-                        const row = tbodyElement.insertRow();
-                        const cell1 = row.insertCell();
-                        const text1 = document.createTextNode(key);
-                        cell1.appendChild(text1);
-                        const cell2 = row.insertCell();
-                        const text2 = document.createTextNode(`${setReturn[key].toFixed(2)}%`);
-                        cell2.appendChild(text2);
-                        const cell3 = row.insertCell();
-                        const text3 = document.createTextNode(`${(setTri[key] - setReturn[key]).toFixed(2)}%`);
-                        cell3.appendChild(text3);
-                        const cell4 = row.insertCell();
-                        const text4 = document.createTextNode(`${setTri[key].toFixed(2)}%`);
-                        cell4.appendChild(text4);
-                        const cell5 = row.insertCell();
-                        const text5 = document.createTextNode(`${bondYield[`${key}Y`].toFixed(2)}%`);
-                        cell5.appendChild(text5);
-                    }
-                    const tfootElement = document.querySelector("tfoot[name=tableFoot]");
-                    const row = tfootElement.insertRow();
-                    const cell1 = row.insertCell();
-                    cell1.colSpan = "3";
-                    const text1 = document.createTextNode(`Market Return Data from SET asof: ${lastavailable.endMonth}-${lastavailable.endYear}`);
-                    cell1.appendChild(text1);
-                    const dateSplit = bondAsof.endDate.split("-");
-                    const cell2 = row.insertCell();
-                    cell2.colSpan = "2";
-                    const text2 = document.createTextNode(`Bond Data from ThaiBMA asof: ${dateSplit[2]}-${month[parseInt(dateSplit[1]) - 1]}-${dateSplit[0]}`);
-                    cell2.appendChild(text2);
-                    loaderElement.classList.toggle("is-hidden");
-                });
-            });
-        });
-    });
-});
 
-const onChangeSelection = () => {
+const onChangeSelection = (firstrun = false) => {
+    console.log(firstrun);
     loaderElement.classList.toggle("is-hidden");
     const selectEndMonth = dateElement.value.split("-")[1];
     const selectEndYear = parseInt(dateElement.value.split("-")[2]);
     getLastAvailable(typeElement.value.toLowerCase(), lastavailable => {
         let endYear = selectEndYear;
         let endMonth = selectEndMonth;
-        if (selectEndYear > lastavailable.endYear) {
+        if (firstrun) {
             endYear = lastavailable.endYear;
             endMonth = lastavailable.endMonth;
-        } else if (selectEndYear == lastavailable.endYear) {
-            const selectIndex = month.indexOf(selectEndMonth);
-            const lastAvailableIndex = month.indexOf(lastavailable.endMonth);
-            if (selectIndex > lastAvailableIndex) {
+        } else {
+            if (selectEndYear > lastavailable.endYear) {
+                endYear = lastavailable.endYear;
                 endMonth = lastavailable.endMonth;
+            } else if (selectEndYear == lastavailable.endYear) {
+                const selectIndex = month.indexOf(selectEndMonth);
+                const lastAvailableIndex = month.indexOf(lastavailable.endMonth);
+                if (selectIndex > lastAvailableIndex) {
+                    endMonth = lastavailable.endMonth;
+                }
             }
         }
         getDefaultReturn(`${typeElement.value.toLowerCase()}_tri`, endYear, endMonth, setTri => {
@@ -200,14 +166,19 @@ const onChangeSelection = () => {
                 getBondAsof(bondAsof => {
                     const dateSplit = dateElement.value.split("-");
                     let asOf = `${dateSplit[2]}-${String(month.indexOf(dateSplit[1]) + 1).padStart(2, '0')}-${String(dateSplit[0]).padStart(2, '0')}`;
-                    if (new Date(dateElement.value) > new Date(bondAsof.endDate)) {
+                    if (firstrun) {
                         asOf = bondAsof.endDate;
+                    } else {
+                        if (new Date(dateElement.value) > new Date(bondAsof.endDate)) {
+                            asOf = bondAsof.endDate;
+                        }
                     }
                     getBondYield(asOf, bondYield => {
                         changeTheadElement(typeElement.value);
                         const tbodyElement = document.querySelector("tbody[name=tableBody]");
                         let i = 0;
                         for (let key in setReturn) {
+                            tbodyElement.children[i].children[0].innerHTML = key;
                             tbodyElement.children[i].children[1].innerHTML = `${setReturn[key].toFixed(2)}%`;
                             tbodyElement.children[i].children[2].innerHTML = `${(setTri[key] - setReturn[key]).toFixed(2)}%`;
                             tbodyElement.children[i].children[3].innerHTML = `${setTri[key].toFixed(2)}%`;
@@ -225,3 +196,40 @@ const onChangeSelection = () => {
         });
     });
 };
+
+const initTable = () => {
+    changeTheadElement(typeElement.value);
+    const tbodyElement = document.querySelector("tbody[name=tableBody]");
+    const placeHolder = "...";
+    for (let i = 0; i < 12; i++) {
+        const row = tbodyElement.insertRow();
+        const cell1 = row.insertCell();
+        const text1 = document.createTextNode(placeHolder);
+        cell1.appendChild(text1);
+        const cell2 = row.insertCell();
+        const text2 = document.createTextNode(`${placeHolder}%`);
+        cell2.appendChild(text2);
+        const cell3 = row.insertCell();
+        const text3 = document.createTextNode(`${placeHolder}%`);
+        cell3.appendChild(text3);
+        const cell4 = row.insertCell();
+        const text4 = document.createTextNode(`${placeHolder}%`);
+        cell4.appendChild(text4);
+        const cell5 = row.insertCell();
+        const text5 = document.createTextNode(`${placeHolder}%`);
+        cell5.appendChild(text5);
+    }
+    const tfootElement = document.querySelector("tfoot[name=tableFoot]");
+    const row = tfootElement.insertRow();
+    const cell1 = row.insertCell();
+    cell1.colSpan = "3";
+    const text1 = document.createTextNode(`Market Return Data from SET asof: ${placeHolder}-${placeHolder}`);
+    cell1.appendChild(text1);
+    const cell2 = row.insertCell();
+    cell2.colSpan = "2";
+    const text2 = document.createTextNode(`Bond Data from ThaiBMA asof: ${placeHolder}-${placeHolder}-${placeHolder}`);
+    cell2.appendChild(text2);
+    onChangeSelection(true);
+};
+
+initTable();

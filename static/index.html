@@ -42,7 +42,7 @@
                             <label class="is-size-4 has-text-weight-bold">Data asof:</label>
                         </div>
                         <div class="column is-two-thirds">
-                            <input class="input is-medium has-text-centered has-text-weight-bold" type="text" name="datePicker" changeDate="onChangeSelection()" readonly />
+                            <input class="input is-medium has-text-centered has-text-weight-bold" type="text" name="datePicker" changeDate="onChangeSelection(false)" readonly />
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
             <div class="columns is-desktop is-multiline is-centered is-vcentered">
                 <div class="loader-wrapper" style="position: relative;">
                     <div class="column">
-                    <div name="loader" class="is-overlay" style="background-color: rgba(255,255,255,0.8);">
+                    <div name="loader" class="is-overlay is-hidden" style="background-color: rgba(255,255,255,0.8);">
                         <div style="position: absolute; top: 40%; width: 100%">
                             <h3 class="is-size-2 has-text-weight-bold has-text-centered">Now Loading...</h3>
                             <progress class="progress is-medium is-primary" max="100">15%</progress>
@@ -90,12 +90,12 @@
     <script src="/script/index.js"></script>
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
     <script>
-    kofiWidgetOverlay.draw('kittiposwajakajornrit0518', {
-        'type': 'floating-chat',
-        'floating-chat.donateButton.text': 'Support me',
-        'floating-chat.donateButton.background-color': '#d9534f',
-        'floating-chat.donateButton.text-color': '#fff'
-    });
+        kofiWidgetOverlay.draw('bossoq', {
+            'type': 'floating-chat',
+            'floating-chat.donateButton.text': 'Support me',
+            'floating-chat.donateButton.background-color': '#00b9fe',
+            'floating-chat.donateButton.text-color': '#fff'
+        });
     </script>
     </body>
 </html>
