@@ -28,7 +28,8 @@ const month = [
     "Dec"
 ];
 
-const dateElement = document.querySelector('input[name="datePicker"]');
+const loaderElement = document.querySelector("div[name='loader']");
+const dateElement = document.querySelector("input[name='datePicker']");
 getBondDate(bondDate => {
     const startDate = bondDate.slice(0, 1);
     const endDate = bondDate.slice(-1);
@@ -170,6 +171,7 @@ getLastAvailable(typeElement.value.toLowerCase(), lastavailable => {
                     cell2.colSpan = "2";
                     const text2 = document.createTextNode(`Bond Data from ThaiBMA asof: ${dateSplit[2]}-${month[parseInt(dateSplit[1]) - 1]}-${dateSplit[0]}`);
                     cell2.appendChild(text2);
+                    loaderElement.classList.toggle("is-hidden");
                 });
             });
         });
@@ -177,6 +179,7 @@ getLastAvailable(typeElement.value.toLowerCase(), lastavailable => {
 });
 
 const onChangeSelection = () => {
+    loaderElement.classList.toggle("is-hidden");
     const selectEndMonth = dateElement.value.split("-")[1];
     const selectEndYear = parseInt(dateElement.value.split("-")[2]);
     getLastAvailable(typeElement.value.toLowerCase(), lastavailable => {
@@ -215,6 +218,7 @@ const onChangeSelection = () => {
                         tfootElement.children[0].children[0].innerHTML = `Market Return Data from SET asof: ${endMonth}-${endYear}`;
                         const dateSplit = asOf.split("-");
                         tfootElement.children[0].children[1].innerHTML = `Bond Data from ThaiBMA asof: ${dateSplit[2]}-${month[parseInt(dateSplit[1]) - 1]}-${dateSplit[0]}`;
+                        loaderElement.classList.toggle("is-hidden");
                     });
                 });
             });

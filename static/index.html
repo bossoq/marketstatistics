@@ -4,6 +4,13 @@
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="thumbnail" content="screenshot.jpg">
+        <meta name="title" content="SET Market Return Calculation">
+        <meta property="og:title" content="SET Market Return Calculation">
+        <meta name="discription" content="Basic SET Market Return Calculator with period selection">
+        <meta property="og:discription" content="Basic SET Market Return Calculator with period selection">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" href="/favicon.ico">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker-bulma.min.css">
         <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
@@ -11,7 +18,7 @@
     <body>
         <div class="container is-fullhd">
             <header class="mt-3 mb-6">
-                <h1 class="title has-text-centered">SET Market Return</h1>
+                <h1 class="title is-size-1 has-text-centered">SET Market Return</h1>
             </header>
             <div class="columns is-desktop is-centered is-vcentered">
                 <div class="column is-one-third">
@@ -41,24 +48,32 @@
                 </div>
             </div>
             <div class="columns is-desktop is-multiline is-centered is-vcentered">
-                <div class="column">
-                    <table class="table is-fullwidth is-hoverable has-text-centered">
-                        <thead name="tableHead">
-                            <tr>
-                                <th>Period</th>
-                                <th>SET Yearly Return</th>
-                                <th>SET Dividend Yield</th>
-                                <th>SET Yearly TRI</th>
-                                <th>Bond Yield</th>
-                            </tr>
-                        </thead>
-                        <tbody name="tableBody"></tbody>
-                        <tfoot class="has-text-weight-bold" name="tableFoot"></tfoot>
-                    </table>
+                <div class="loader-wrapper" style="position: relative;">
+                    <div class="column">
+                    <div name="loader" class="is-overlay" style="background-color: rgba(255,255,255,0.8);">
+                        <div style="position: absolute; top: 50%; width: 100%">
+                            <h3 class="is-size-2 has-text-weight-bold has-text-centered" style="top: 50%;">Now Loading...</h3>
+                            <progress class="progress is-medium is-primary" max="100">15%</progress>
+                        </div>
+                    </div>
+                        <table class="table is-fullwidth is-hoverable has-text-centered">
+                            <thead name="tableHead">
+                                <tr>
+                                    <th>Period</th>
+                                    <th>SET Yearly Return</th>
+                                    <th>SET Dividend Yield</th>
+                                    <th>SET Yearly TRI</th>
+                                    <th>Bond Yield</th>
+                                </tr>
+                            </thead>
+                            <tbody name="tableBody"></tbody>
+                            <tfoot class="has-text-weight-bold" name="tableFoot"></tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="columns is-desktop is-multiline is-centered is-vcentered mt-5">
+        <div class="columns is-desktop is-multiline is-centered is-vcentered mt-5 mt-5">
             <div class="column is-one-third has-text-centered">
                 <h4 class="has-text-weight-bold">Project by K. Wajakajornrit</h4>
                 <span class="icon-text">
@@ -72,7 +87,7 @@
             </div>
         </div>
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker.min.js"></script>
-    <script src="script/index.js"></script>
+    <script src="/script/index.js"></script>
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
     <script>
     kofiWidgetOverlay.draw('kittiposwajakajornrit0518', {
